@@ -1,13 +1,13 @@
 import streamlit as st
 import quant_a
+import quant_b
 
-st.set_page_config(page_title="Dashboard Finance", layout="wide")
+st.set_page_config(page_title="Dashboard Finance Quantitative", layout="wide")
 
-# Menu simple
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choisir un module", ["Analyse Quant A", "Portfolio Quant B"])
+st.sidebar.title("Navigation Projet")
+selection = st.sidebar.radio("Choisir le module", ["Quant A - Actif Unique", "Quant B - Portefeuille"])
 
-if page == "Analyse Quant A":
+if selection == "Quant A - Actif Unique":
     quant_a.run()
-else:
-    st.info("Le module Quant B sera bientot disponible.")
+elif selection == "Quant B - Portefeuille":
+    quant_b.run()  
