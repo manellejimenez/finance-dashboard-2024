@@ -27,7 +27,15 @@ Pour valider l'efficacite de l'algorithme, deux indicateurs cles sont calcules :
 * **Maximum Drawdown (MDD)** : Il represente la perte maximale subie par un investisseur entre un sommet et un creux.
   $$MDD = \frac{\text{Valeur Crête} - \text{Valeur Creuse}}{\text{Valeur Crête}}$$
 
-> **#CAPTURE_1** : Inserez ici une capture d'ecran du graphique de performance du Module Quant A. On doit y voir la courbe de l'actif et celle de la strategie diverger, ainsi que les blocs de metriques (Sharpe et Drawdown) affiches par Streamlit.
+### Module Quant A : Analyse Univariée
+> ![Analyse Quant A](./img1.png)
+Analyse de la stratégie de Momentum (SMA) : Cette capture illustre le fonctionnement du backtesting univarié. On y observe la courbe de la stratégie de Moyenne Mobile Simple (en vert) superposée à la performance de l'actif (en gris). Le graphique met en évidence la capacité de l'algorithme à sortir du marché (ligne plate) lors des phases de baisse prolongées pour limiter le Maximum Drawdown, ici calculé à -19.70%.
+
+> ![Analyse Quant A](./img2.png)
+Module de Prédiction par Régression Linéaire : Vue détaillée de la brique d'Intelligence Artificielle. Le modèle de régression linéaire analyse les tendances récentes pour estimer le prix de clôture de la session suivante. Dans cet exemple, le modèle projette une tendance haussière avec une hausse estimée de +3.89%, fournissant ainsi un indicateur d'aide à la décision complémentaire aux indicateurs techniques classiques.
+
+>![Analyse Quant A](./img3.png)
+> Vue d'ensemble des indicateurs de performance : Cette vue présente l'interface de contrôle du module Quant A. Elle met en avant les métriques clés de performance ajustées au risque, notamment le Ratio de Sharpe (0.51). L'interface permet une sélection dynamique de l'actif et de l'horizon temporel, recalculant instantanément les statistiques de performance pour l'utilisateur.
 
 ---
 
@@ -42,8 +50,11 @@ Le portefeuille est construit selon un vecteur de poids $W = [w_1, w_2, ..., w_n
 L'evaluation de la diversification repose sur la matrice de correlation de Pearson. Une correlation proche de 1 indique une redondance du risque, tandis qu'une correlation proche de 0 ou negative indique une diversification optimale.
 $$\rho_{X,Y} = \frac{\text{cov}(X,Y)}{\sigma_X \sigma_Y}$$
 
-> **#CAPTURE_2** : Inserez ici une capture d'ecran de la Heatmap de correlation du Module Quant B montrant les relations entre les actifs selectionnes (AAPL, TSLA, BTC, etc.).
+> ![Analyse Quant A](./img5.png)
+>  Analyse de la Diversification et des Co-mouvements Texte : Heatmap de la matrice de corrélation de Pearson pour les actifs du portefeuille. Les nuances de bleu indiquent le degré de dépendance entre les titres (ex: corrélation de 0.55 entre TSLA et GOOGL). Cet outil est crucial pour identifier les risques de concentration et s'assurer que les actifs choisis ne réagissent pas de manière identique aux chocs de marché.
 
+> ![Analyse Quant A](./img4.png)
+> Performance Comparée du Portefeuille Multi-Actifs Texte : Illustration du module de gestion de portefeuille. La ligne bleue grasse représente la valeur liquidative du portefeuille global (base 100), tandis que les lignes grises en arrière-plan tracent la performance individuelle des actifs sélectionnés (AAPL, MSFT, TSLA, GOOGL). Ce graphique démontre visuellement l'effet de lissage de la volatilité grâce à la diversification.
 ---
 
 ## 4. Intelligence Artificielle et Modelisation Predictive
@@ -53,8 +64,6 @@ Le projet integre une brique de Machine Learning pour la prediction a court term
 ### 4.1 Regression Lineaire Simple
 Le modele utilise une approche par moindres carres ordinaires (OLS) pour estimer la tendance future en se basant sur les 60 dernieres sessions de bourse.
 $$y = \beta_0 + \beta_1 x + \epsilon$$
-
-> **#CAPTURE_3** : Inserez ici une capture de la section Machine Learning en bas du module Quant A, affichant la prediction numerique du prix de cloture pour la session suivante.
 
 ---
 
@@ -69,4 +78,4 @@ L'application Streamlit est executee au sein d'un multiplexeur de terminaux **tm
 Le script `daily_report.py` a ete configure dans le planificateur de taches **crontab** pour une execution automatique a 20h00 chaque jour.
 ```bash
 # Configuration Cron
-00 20 * * * /usr/bin/python3 /home/ubuntu/project/daily_report.py
+00 20 * * * /usr/bin/python3 /home/ubuntu/project/daily_report.py ```
