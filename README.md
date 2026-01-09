@@ -86,6 +86,7 @@ Le script d'analyse et de reporting (`daily_report.py`) est automatisé via le p
 ```bash
 # Configuration enregistrée dans le Crontab :
 00 20 * * * /home/manellejmz/venv/bin/python /home/manellejmz/finance-dashboard-2024/daily_report.py
+```
 
-5.4 Accès au Dashboard
+### 5.4 Accès au Dashboard
 L'application est déployée et consultable en direct à l'adresse suivante : http://172.25.179.79:8501
