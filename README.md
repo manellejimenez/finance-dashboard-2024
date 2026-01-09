@@ -69,13 +69,23 @@ $$y = \beta_0 + \beta_1 x + \epsilon$$
 
 ## 5. Infrastructure Linux et Automatisation
 
-Le deploiement a ete realise sur une instance serveur Linux, respectant les standards de production logicielle.
+Le déploiement a été réalisé sur une instance serveur Ubuntu, en appliquant les meilleures pratiques d'isolation et de persistance logicielle.
 
-### 5.1 Persistance du Service
-L'application Streamlit est executee au sein d'un multiplexeur de terminaux **tmux**. Cela garantit que le serveur reste operationnel independamment de l'etat de la connexion SSH locale de l'administrateur.
+### 5.1 Environnement Virtuel (Isolation)
+Afin de garantir l'intégrité du système et d'éviter les conflits de dépendances, l'application est isolée dans un environnement virtuel Python (`venv`). 
+- **Bénéfice** : Isolation complète des bibliothèques (Streamlit, Pandas, yFinance) par rapport au Python natif du serveur.
 
-### 5.2 Automatisation des Taches (Cron)
-Le script `daily_report.py` a ete configure dans le planificateur de taches **crontab** pour une execution automatique a 20h00 chaque jour.
+### 5.2 Persistance du Service via tmux
+L'application Streamlit est exécutée au sein d'un multiplexeur de terminaux **tmux** (session nommée `finance`).
+- **Fonctionnement** : Cela permet de détacher le processus du terminal actif. Le dashboard reste donc accessible en ligne 24h/24, même après la fermeture de la session SSH.
+- **Commande de vérification** : `tmux attach -t finance`
+
+### 5.3 Automatisation des Tâches (Crontab)
+Le script d'analyse et de reporting (`daily_report.py`) est automatisé via le planificateur de tâches **Cron**. Il est configuré pour s'exécuter chaque jour à 20h00, utilisant l'interpréteur Python de l'environnement virtuel pour garantir l'accès aux dépendances.
+
 ```bash
-# Configuration Cron
-00 20 * * * /usr/bin/python3 /home/ubuntu/project/daily_report.py ```
+# Configuration enregistrée dans le Crontab :
+00 20 * * * /home/manellejmz/venv/bin/python /home/manellejmz/finance-dashboard-2024/daily_report.py
+
+5.4 Accès au Dashboard
+L'application est déployée et consultable en direct à l'adresse suivante : http://172.25.179.79:8501
